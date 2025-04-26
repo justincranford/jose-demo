@@ -128,9 +128,9 @@ func generateAesJwks(t *testing.T, useParsedJwk bool, jwkKeyEncryptionAlgs []jos
 			require.NoError(t, err)
 			assert.Equal(t, decodedJwk, generatedJwk, "Decoded JWK didn't match original clear JWK, due to ParseKey handling 'enc' header as string instead of expected jwa.ContentEncryptionAlgorithm")
 
-			jwks = append(jwks, decodedJwk)
+			jwks = append(jwks, decodedJwk) // 'enc' header is 1) unprotected, 2) type string
 		} else {
-			jwks = append(jwks, generatedJwk)
+			jwks = append(jwks, generatedJwk) // 'enc' header is 1) unprotected, 2) type jwa.ContentEncryptionAlgorithm
 		}
 	}
 	return jwks
