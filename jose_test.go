@@ -17,46 +17,46 @@ func TestJWKOperations(t *testing.T) {
 	expectedDecryptedBytes := []byte("Hello World!")
 
 	testCases := []struct {
-		doEncodeDecodeJwksBeforeEncryptDecrypt bool
-		numJwks                                int
-		alg                                    jwa.KeyEncryptionAlgorithm
-		enc                                    jwa.ContentEncryptionAlgorithm
+		useJwkDecodedFromJson bool
+		numJwks               int
+		alg                   jwa.KeyEncryptionAlgorithm
+		enc                   jwa.ContentEncryptionAlgorithm
 	}{
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A256GCM()}, // direct mode => only 1 JWK
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A192GCM()}, // direct mode => only 1 JWK
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A128GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A256GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A192GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A128GCM()}, // direct mode => only 1 JWK
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.A256GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 2, alg: jwa.A256GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 3, alg: jwa.A256GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.A256GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 2, alg: jwa.A256GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 3, alg: jwa.A256GCMKW(), enc: jwa.A128GCM()},
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.A192GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 2, alg: jwa.A192GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 3, alg: jwa.A192GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.A192GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 2, alg: jwa.A192GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 3, alg: jwa.A192GCMKW(), enc: jwa.A128GCM()},
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 1, alg: jwa.A128GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 2, alg: jwa.A128GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: false, numJwks: 3, alg: jwa.A128GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 1, alg: jwa.A128GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 2, alg: jwa.A128GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: false, numJwks: 3, alg: jwa.A128GCMKW(), enc: jwa.A128GCM()},
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A256GCM()}, // direct mode => only 1 JWK
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A192GCM()}, // direct mode => only 1 JWK
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A128GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A256GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A192GCM()}, // direct mode => only 1 JWK
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.DIRECT(), enc: jwa.A128GCM()}, // direct mode => only 1 JWK
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.A256GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 2, alg: jwa.A256GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 3, alg: jwa.A256GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.A256GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 2, alg: jwa.A256GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 3, alg: jwa.A256GCMKW(), enc: jwa.A128GCM()},
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.A192GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 2, alg: jwa.A192GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 3, alg: jwa.A192GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.A192GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 2, alg: jwa.A192GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 3, alg: jwa.A192GCMKW(), enc: jwa.A128GCM()},
 
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 1, alg: jwa.A128GCMKW(), enc: jwa.A256GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 2, alg: jwa.A128GCMKW(), enc: jwa.A192GCM()},
-		{doEncodeDecodeJwksBeforeEncryptDecrypt: true, numJwks: 3, alg: jwa.A128GCMKW(), enc: jwa.A128GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 1, alg: jwa.A128GCMKW(), enc: jwa.A256GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 2, alg: jwa.A128GCMKW(), enc: jwa.A192GCM()},
+		{useJwkDecodedFromJson: true, numJwks: 3, alg: jwa.A128GCMKW(), enc: jwa.A128GCM()},
 	}
 
 	for _, tc := range testCases {
-		t.Run(fmt.Sprintf("alg=[%s],enc=[%s],doEncodeDecodeJwkBeforeEncryptDecrypt=[%v]", tc.alg, tc.enc, tc.doEncodeDecodeJwksBeforeEncryptDecrypt), func(t *testing.T) {
+		t.Run(fmt.Sprintf("alg=[%s],enc=[%s],doEncodeDecodeJwkBeforeEncryptDecrypt=[%v]", tc.alg, tc.enc, tc.useJwkDecodedFromJson), func(t *testing.T) {
 			jwks := []jwk.Key{}
 			for range tc.numJwks {
 				generatedJwk := generateAesJwk(t, tc.alg, tc.enc)
@@ -65,7 +65,7 @@ func TestJWKOperations(t *testing.T) {
 				require.NoError(t, err)
 				t.Logf("JWK: %s\n", encodedJwk)
 
-				if tc.doEncodeDecodeJwksBeforeEncryptDecrypt {
+				if tc.useJwkDecodedFromJson {
 					var decodedJwk jwk.Key
 					err = json.Unmarshal(encodedJwk, &decodedJwk) // decode from persistence
 					require.NoError(t, err)                       // this should work, but I get an unexpected error => json: cannot unmarshal object into Go value of type jwk.Key
