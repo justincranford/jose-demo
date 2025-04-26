@@ -1,7 +1,7 @@
 package main
 
 import (
-	cryptoRand "crypto/rand"
+	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -12,12 +12,6 @@ import (
 	"github.com/lestrrat-go/jwx/v3/jwk"
 	"github.com/stretchr/testify/require"
 )
-
-// var algorithms = []jwa.KeyEncryptionAlgorithm{jwa.DIRECT(), jwa.A256GCMKW(), jwa.A192GCMKW(), jwa.A128GCMKW()}
-// var encryptions = []jwa.ContentEncryptionAlgorithm{jwa.A256GCM(), jwa.A192GCM(), jwa.A128GCM()}
-
-// alg := algorithms[rand.Intn(len(algorithms))]
-// enc := encryptions[rand.Intn(len(encryptions))]
 
 func TestJWKOperations(t *testing.T) {
 	expectedDecryptedBytes := []byte("Hello World!")
@@ -136,7 +130,7 @@ func generateAesJwk(t *testing.T, kekAlg jwa.KeyEncryptionAlgorithm, cekAlg jwa.
 	}
 
 	aesKeyBytes := make([]byte, keySize)
-	aesKeyBytesCount, err := cryptoRand.Read(aesKeyBytes)
+	aesKeyBytesCount, err := rand.Read(aesKeyBytes)
 	require.NoError(t, err)
 	require.Equal(t, keySize, aesKeyBytesCount)
 
