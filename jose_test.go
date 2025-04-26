@@ -12,6 +12,7 @@ import (
 	joseJwa "github.com/lestrrat-go/jwx/v3/jwa"
 	joseJwe "github.com/lestrrat-go/jwx/v3/jwe"
 	joseJwk "github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -125,7 +126,7 @@ func generateAesJwks(t *testing.T, useParsedJwk bool, jwkKeyEncryptionAlgs []jos
 		if useParsedJwk {
 			decodedJwk, err := joseJwk.ParseKey(encodedJwk) // decode from persistence
 			require.NoError(t, err)
-			// assert.Equal(t, decodedJwk, generatedJwk, "Decoded JWK didn't match original clear JWK, due to ParseKey handling 'enc' header as string instead of expected jwa.ContentEncryptionAlgorithm")
+			assert.Equal(t, decodedJwk, generatedJwk, "Decoded JWK didn't match original clear JWK, due to ParseKey handling 'enc' header as string instead of expected jwa.ContentEncryptionAlgorithm")
 
 			jwks = append(jwks, decodedJwk)
 		} else {
