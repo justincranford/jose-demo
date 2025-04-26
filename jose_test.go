@@ -66,9 +66,8 @@ func TestJWKOperations(t *testing.T) {
 				t.Logf("JWK: %s\n", encodedJwk)
 
 				if tc.useJwkDecodedFromJson {
-					var decodedJwk jwk.Key
-					err = json.Unmarshal(encodedJwk, &decodedJwk) // decode from persistence
-					require.NoError(t, err)                       // this should work, but I get an unexpected error => json: cannot unmarshal object into Go value of type jwk.Key
+					decodedJwk, err := jwk.ParseKey(encodedJwk) // decode from persistence
+					require.NoError(t, err)                     // this should work, but I get an unexpected error => json: cannot unmarshal object into Go value of type jwk.Key
 					require.Equal(t, decodedJwk, generatedJwk)
 
 					jwks = append(jwks, decodedJwk)
