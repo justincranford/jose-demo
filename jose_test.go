@@ -56,7 +56,7 @@ func TestJWKOperations(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		t.Run(fmt.Sprintf("alg=[%s],enc=[%s],doEncodeDecodeJwkBeforeEncryptDecrypt=[%v]", tc.alg, tc.enc, tc.useJwkDecodedFromJson), func(t *testing.T) {
+		t.Run(fmt.Sprintf("useJwkDecodedFromJson=[%v],numJwks=[%d],alg=[%s],enc=[%s]", tc.useJwkDecodedFromJson, tc.numJwks, tc.alg, tc.enc), func(t *testing.T) {
 			jwks := []jwk.Key{}
 			for range tc.numJwks {
 				generatedJwk := generateAesJwk(t, tc.alg, tc.enc)
