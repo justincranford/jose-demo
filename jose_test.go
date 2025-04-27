@@ -126,7 +126,7 @@ func TestAesJWKsEncryptDecryptCombinations(t *testing.T) {
 			require.Equal(t, clearBytes, decryptedBytes)
 
 			t.Logf("Decrypted Bytes: %s [0x%x]\n", string(clearBytes), clearBytes)
-			t.Logf("Decrypt succeeded")
+			t.Logf("Decrypt succeeded!!!\n\n\n")
 		})
 	}
 }
