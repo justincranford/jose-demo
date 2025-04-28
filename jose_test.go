@@ -156,7 +156,7 @@ func jweEncrypt(t *testing.T, doSerDes bool, aesJwks []jwk.Key, clearBytes []byt
 		}
 
 		if len(uniqueCekAlgs) == 0 {
-			jweEncryptOptions = append(jweEncryptOptions, jwe.WithContentEncryption(cekAlg)) // Content is encrypted once-and-only-once, so only all WithContentEncryption once
+			jweEncryptOptions = append(jweEncryptOptions, jwe.WithContentEncryption(cekAlg)) // Content is encrypted once-and-only-once, so only add WithContentEncryption once
 		}
 		uniqueCekAlgs[cekAlg] = struct{}{}      // record unique cekAlgString so far
 		require.Equal(t, 1, len(uniqueCekAlgs)) // Content is encrypted once-and-only-once, so all unique JWK 'enc' headers must be the same
